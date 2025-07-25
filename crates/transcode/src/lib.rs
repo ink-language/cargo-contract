@@ -510,6 +510,15 @@ impl CompositeTypeFields {
     }
 }
 
+/// Dummy function to force crate usage for feature unification.
+///
+/// todo Remove once the `polkadot-sdk` compilation error
+/// for `tokio` is fixed (https://github.com/use-ink/ink/pull/2557).
+#[allow(dead_code)]
+async fn force_crate_usage() -> tokio::net::TcpListener {
+    tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -973,13 +982,4 @@ mod tests {
             .decode_contract_event(&signature_topic, &mut &encoded_bytes[..])
             .unwrap();
     }
-}
-
-// Dummy function to force crate usage for feature unification.
-
-// todo Remove once the `polkadot-sdk` compilation error
-// for `tokio` is fixed (https://github.com/use-ink/ink/pull/2557).
-#[allow(dead_code)]
-async fn force_crate_usage() -> tokio::net::TcpListener {
-    tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap()
 }
