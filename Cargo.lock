@@ -1797,6 +1797,7 @@ dependencies = [
  "sp-keyring",
  "strsim",
  "thiserror 2.0.12",
+ "tokio",
  "tracing",
 ]
 
