@@ -50,9 +50,11 @@ use subxt::{
         },
         scale_encode,
     },
-    utils::H160,
+    utils::{H160, H256},
     Config,
 };
+//use contract_transcode::env_types::H256;
+//use ink::H256;
 
 /// A custom event emitted by the contract.
 #[derive(
@@ -64,14 +66,18 @@ use subxt::{
 )]
 #[decode_as_type(crate_path = "subxt::ext::scale_decode")]
 #[encode_as_type(crate_path = "subxt::ext::scale_encode")]
-pub struct ContractEmitted<AccountId> {
-    pub contract: AccountId,
-    pub data: Vec<u8>,
+pub struct ContractEmitted {
+    /// The contract that emitted the event.
+    contract: H160,
+    /// Data supplied by the contract. Metadata generated during contract compilation
+    /// is needed to decode it.
+    data: Vec<u8>,
+    /// A list of topics used to index the event.
+    /// Number of topics is capped by [`limits::NUM_EVENT_TOPICS`].
+    topics: Vec<H256>,
 }
 
-impl<AccountId> StaticEvent for ContractEmitted<AccountId>
-where
-    AccountId: IntoVisitor,
+impl StaticEvent for ContractEmitted
 {
     const PALLET: &'static str = "Revive";
     const EVENT: &'static str = "ContractEmitted";
@@ -157,7 +163,7 @@ impl DisplayEvents {
             let event_sig_topic = event.topics().iter().next();
             let mut unnamed_field_name = 0;
             for field_metadata in event_fields {
-                if <ContractEmitted<C::AccountId> as StaticEvent>::is_event(
+                if <ContractEmitted as StaticEvent>::is_event(
                     event.pallet_name(),
                     event.variant_name(),
                 ) && field_metadata.name == Some("data".to_string())
