@@ -52,9 +52,6 @@ hex = "0.4.3"
 sp-core = { git = "https://github.com/use-ink/polkadot-sdk.git", rev = "a71ec19a94702ea71767ba5ac97603ea6c6305c1", default-features = false }
 sp-weights = { git = "https://github.com/use-ink/polkadot-sdk.git", rev = "a71ec19a94702ea71767ba5ac97603ea6c6305c1", default-features = false }
 
-# todo Pin until https://github.com/jhpratt/deranged/issues/18 is resolved
-deranged = { version = "=0.4.0", default-features = false }
-
 [build-dependencies]
 anyhow = "1.0.95"
 substrate-build-script-utils = { git = "https://github.com/use-ink/polkadot-sdk.git", rev = "a71ec19a94702ea71767ba5ac97603ea6c6305c1", default-features = false }
